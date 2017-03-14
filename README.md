@@ -21,3 +21,16 @@ Usage
     hex (no dotted) : 0x7f000001
     combo (h.d.o.h) : 0x7f.0.0.0x1
 
+
+Build
+-----
+
+    # make
+    make -C src all
+    make[1]: Entering directory '/home/user/code/ipfmt/src'
+    go build -ldflags "-X main.Version=0.0.1 -X main.Build=`git rev-parse HEAD`" -o ../bin/ipfmt
+    make[1]: Leaving directory '/home/user/code/ipfmt/src'
+
+    # ./bin/ipfmt
+    Usage:
+      ./bin/ipfmt 127.0.0.1
