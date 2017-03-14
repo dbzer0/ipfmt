@@ -1,4 +1,4 @@
-BINARY=ip2fmt
+BINARY=ipfmt
 
 VERSION=0.0.1
 BUILD=`git rev-parse HEAD`
