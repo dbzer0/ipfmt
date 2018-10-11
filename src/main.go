@@ -1,11 +1,12 @@
 package main
 
 import (
-	"./ipfmt"
 	"flag"
 	"fmt"
 	"net"
 	"os"
+
+	"github.com/dbzer0/ipfmt/src/ipfmt"
 )
 
 var (
@@ -13,18 +14,11 @@ var (
 	Build   string
 )
 
-func helpMe(prog string) {
-	help := fmt.Sprintf("Usage: \n  %s 127.0.0.1", prog)
-	fmt.Println(help)
-}
-
 func main() {
 	flag.Usage = func() {
-		helpMe(os.Args[0])
-		fmt.Println()
+		fmt.Printf("Usage: \n  %s 127.0.0.1\n", os.Args[0])
 		flag.PrintDefaults()
 	}
-
 	flag.Parse()
 
 	if len(os.Args) < 2 {
@@ -32,15 +26,16 @@ func main() {
 		os.Exit(0)
 	}
 
-	// преобразуем строку в IP
-	IP := net.ParseIP(os.Args[1])
-	if IP == nil {
+	var ip net.IP
+	if ip = net.ParseIP(os.Args[1]); ip == nil {
 		fmt.Printf("ERROR: invalid IP address: %s\n", os.Args[1])
 		os.Exit(1)
 	}
 
-	ipf := ipfmt.NewIpFormat(IP)
-	ipf.PrintAll()
-
-	os.Exit(0)
+	fmt.Printf("ip              : %s\n", ip)
+	fmt.Printf("hex             : %s\n", ipfmt.ToHex(ip))
+	fmt.Printf("octal           : %s\n", ipfmt.ToOctal(ip))
+	fmt.Printf("integer         : %s\n", ipfmt.ToInt(ip))
+	fmt.Printf("hex (no dotted) : %s\n", ipfmt.ToSingleHex(ip))
+	fmt.Printf("combo (h.d.o.h) : %s\n", ipfmt.Combo(ip))
 }
